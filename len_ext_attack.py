@@ -32,7 +32,6 @@ h = md5(
 suffix = "&command3=UnlockAllSafes"
 h.update(suffix)
 new_token = h.hexdigest()
-print("new token: " + new_token)
 
 forged = message.encode('latin-1') + pad + suffix.encode('latin-1')
 encoded = urllib.parse.quote(forged, safe='=&')
@@ -40,4 +39,4 @@ encoded = urllib.parse.quote(forged, safe='=&')
 #creating url new
 base = url[:url.index("?")]
 new_url = f"{base}?token={new_token}&{encoded}"
-print("new URL: " + new_url)
+print(new_url)
