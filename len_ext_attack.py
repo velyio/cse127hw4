@@ -1,9 +1,9 @@
-import sys
-import urllib.parse
+import sys, urllib.parse
 from pymd5 import md5, padding
-from urllib.parse import urlparse, parse_qs, unquote
+from urllib.parse import urlparse
+url = sys.argv[1]
 
-url = "http://bank.cse127.ucsd.edu/pa4/api?token=d6613c382dbb78b5592091e08f6f41fe&user=earlence&command1=ListSquirrels&command2=NoOp"
+# http://bank.cse127.ucsd.edu/pa4/api?token=d6613c382dbb78b5592091e08f6f41fe&user=earlence&command1=ListSquirrels&command2=NoOp
 
 parsed = urlparse(url)
 params = parsed.query
@@ -25,18 +25,21 @@ total_len = password_len + len(message)
 pad = padding(total_len * 8)
 padded_len = total_len + len(pad)
 
+#new token
 h = md5(
     state=bytes.fromhex(known_token),
     count=padded_len * 8
 )
-suffix = "&command3=UnlockAllSafes"
+suffix = b"&command3=UnlockAllSafes"
 h.update(suffix)
 new_token = h.hexdigest()
 
-forged = message.encode('latin-1') + pad + suffix.encode('latin-1')
-encoded = urllib.parse.quote(forged, safe='=&')
+# new url
+message_encoded = urllib.parse.quote(message, safe='=&+')
+pad_encoded = urllib.parse.quote(pad, safe='')
+suffix_encoded = urllib.parse.quote(suffix, safe='=&')
 
-#creating url new
 base = url[:url.index("?")]
-new_url = f"{base}?token={new_token}&{encoded}"
+new_url = f"{base}?token={new_token}&{message_encoded}{pad_encoded}{suffix_encoded}"
+
 print(new_url)
