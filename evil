@@ -1,0 +1,9 @@
+#!/bin/bash
+blob=$(dd if="$0" bs=1 skip=128 count=128 2>/dev/null | sha256sum | cut -c1-64)
+#                                                                                                  
+}õQ/J1—	 S×òŒ?Ö¦'ÉÕq}70n?ùu¬<ïÎñÁÊ ëÐkÄ¹LÂs‡ {­/œI½U½¨×ÌæÔ8ØE'‘¥ý_[¬|þù…&êÉnIì‡âmædšãÒš,D×’ÜÕìVµØZœÓö´šrÕÊöá
+if [ "$blob" = "b9732f5e29d02c8f5b110880ba33fb2fb120ec4e6caf1de237fe8e6721f4fb8c" ]; then
+    echo "I mean no harm."
+else
+    echo "You are doomed!"
+fi
