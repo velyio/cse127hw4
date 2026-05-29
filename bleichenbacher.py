@@ -39,7 +39,9 @@ msg.extend(b'\x30\x21\x30\x09\x06\x05\x2b\x0e\x03\x02\x1a\x05\x00\x04\x14')
 msg.extend(digest)  
 
 # Pad the rest of the message with zeros
-msg.extend(b'\x00' * (256 - len(msg)))
+# msg.extend(b'\x00' * (256 - len(msg)))
+msg.extend(b'\x00' * 10)
+
 
 padded_message = bytes(msg)
 
