@@ -22,7 +22,8 @@ n = publickey.n #
 e = publickey.e # the exponent, should be 3
 
 # Hash the message using SHA-1
-h = SHA.new(message.encode())
+h = SHA.new()
+h.update(message.encode())
 digest = h.digest()
 
 # Make the fake padded message
