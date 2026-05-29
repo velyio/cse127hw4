@@ -26,15 +26,13 @@ h = SHA.new()
 h.update(message.encode())
 digest = h.digest()
 
-digest[-1] = (digest[-1] + 1) % 256  # Add 1 (with wrap-around in case it's 255) to the last byte of the digest
-
 # Make the fake padded message
 msg = bytearray()
 msg.append(0x00)
 msg.append(0x01)
 
 # Does not check the number of 0xFF byte
-msg.extend(b'\xFF'* 10)
+msg.extend(b'\xFF'* 11)
 msg.append(0x00)
 # ASN.1 "magic" bytes for SHA-1
 msg.extend(b'\x30\x21\x30\x09\x06\x05\x2b\x0e\x03\x02\x1a\x05\x00\x04\x14')
@@ -42,7 +40,7 @@ msg.extend(b'\x30\x21\x30\x09\x06\x05\x2b\x0e\x03\x02\x1a\x05\x00\x04\x14')
 msg.extend(digest)  
 
 # Pad the rest of the message with zeros
-msg.extend(b'\x00' * (256 - len(msg)))
+msg.extend(b'\xFF' * (256 - len(msg)))
 
 
 padded_message = bytes(msg)
