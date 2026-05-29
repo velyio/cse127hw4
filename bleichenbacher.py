@@ -30,8 +30,8 @@ msg = bytearray()
 msg.append(0x00)
 msg.append(0x01)
 
-# Does check the number of 0xFF bytes so just chose 10
-msg.extend(b'\xFF'*10)
+# Does not check the number of 0xFF byte
+msg.extend(b'\xFF'* 8)
 msg.append(0x00)
 # ASN.1 "magic" bytes for SHA-1
 msg.extend(b'\x30\x21\x30\x09\x06\x05\x2b\x0e\x03\x02\x1a\x05\x00\x04\x14')
@@ -39,8 +39,7 @@ msg.extend(b'\x30\x21\x30\x09\x06\x05\x2b\x0e\x03\x02\x1a\x05\x00\x04\x14')
 msg.extend(digest)  
 
 # Pad the rest of the message with zeros
-# msg.extend(b'\x00' * (256 - len(msg)))
-msg.extend(b'\x00' * 10)
+msg.extend(b'\x00' * (256 - len(msg)))
 
 
 padded_message = bytes(msg)
