@@ -1,0 +1,9 @@
+
+EOF
+digest=$(cat DIGEST | sed 's/(stdin)= //' )
+# echo "The sha256 digest is $digest"
+if [ "$digest" = "SHA2-25677a8ceaa89f95a68a220cb45486fc61353536c253db719f714a65c8a21725565" ]; then
+    echo "I mean no harm."
+else
+    echo "You are doomed!"
+fi
